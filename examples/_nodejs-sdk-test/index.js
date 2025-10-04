@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 // import { UploadNestClient } from "@uploadnest/client";
-import { VaultaClient } from '@vaulta/sdk';
+import { VaultaClient } from '@vaulta.dev/sdk';
 import dotenv from "dotenv";
 
 dotenv.config();

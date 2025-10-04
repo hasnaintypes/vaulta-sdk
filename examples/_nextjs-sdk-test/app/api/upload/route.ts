@@ -1,4 +1,4 @@
-import { VaultaClient } from "@vaulta/sdk";
+import { VaultaClient } from "@vaulta.dev/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
 const client = new VaultaClient({

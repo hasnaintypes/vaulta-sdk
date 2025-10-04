@@ -1,5 +1,5 @@
 "use server";
-import { VaultaClient } from "@vaulta/sdk";
+import { VaultaClient } from "@vaulta.dev/sdk";
 
 const client = new VaultaClient({
   apiKey: process.env.VAULTA_API_KEY!,

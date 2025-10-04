@@ -1,5 +1,5 @@
 {
-  "name": "@vaulta/sdk",
+  "name": "@vaulta.dev/sdk",
   "version": "1.0.1",
   "description": "The official TypeScript library for the Vaulta API",
   "main": "./dist/index.cjs",

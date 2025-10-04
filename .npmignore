@@ -10,3 +10,6 @@ __tests__/
 test/
 *.test.ts
 *.spec.ts
+
+examples/
+.vscode/

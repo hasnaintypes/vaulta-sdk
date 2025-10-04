@@ -1,22 +1,22 @@
-# @vaulta/sdk
+# @vaulta.dev/sdk
 
-[![NPM version](https://img.shields.io/npm/v/@vaulta/sdk.svg)](https://npmjs.org/package/@vaulta/sdk)
-![Bundle Size](https://img.shields.io/bundlephobia/minzip/@vaulta/sdk)
+[![NPM version](https://img.shields.io/npm/v/@vaulta.dev/sdk.svg)](https://npmjs.org/package/@vaulta.dev/sdk)
+![Bundle Size](https://img.shields.io/bundlephobia/minzip/@vaulta.dev/sdk)
 
 TypeScript library for uploading files to the Vaulta API. Works in Node.js, Next.js, and browsers.
 
 ## Installation
 
 ```bash
-npm install @vaulta/sdk
+npm install @vaulta.dev/sdk
 # or
-pnpm add @vaulta/sdk
+pnpm add @vaulta.dev/sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { VaultaClient } from "@vaulta/sdk";
+import { VaultaClient } from "@vaulta.dev/sdk";
 
 const client = new VaultaClient({
   apiKey: "your-api-key",
@@ -67,7 +67,7 @@ await client.uploadFiles(Array.from(fileInput.files));
 
 ```typescript
 // app/upload/page.tsx
-import { VaultaClient } from "@vaulta/sdk";
+import { VaultaClient } from "@vaulta.dev/sdk";
 
 async function uploadAction(formData: FormData) {
   "use server";
@@ -93,7 +93,7 @@ async function uploadAction(formData: FormData) {
 ## Error Handling
 
 ```typescript
-import { ValidationError, UploadError } from "@vaulta/sdk/errors";
+import { ValidationError, UploadError } from "@vaulta.dev/sdk/errors";
 
 try {
   await client.uploadFiles(files);
@@ -111,7 +111,7 @@ try {
 Full TypeScript support with type definitions:
 
 ```typescript
-import type { UploadFileResponse } from "@vaulta/sdk/types";
+import type { UploadFileResponse } from "@vaulta.dev/sdk/types";
 
 const result: UploadFileResponse = await client.uploadFiles(files);
 ```
