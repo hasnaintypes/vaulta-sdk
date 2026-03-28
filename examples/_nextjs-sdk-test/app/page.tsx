@@ -19,9 +19,8 @@ export default function UploadTest() {
 
       const result = await uploadAction(formData);
       setResponse(result);
-    } catch (error: any) {
-      console.error("Server Action error:", error);
-      setResponse({ error: error.message });
+    } catch (error: unknown) {
+      setResponse({ error: error instanceof Error ? error.message : "Upload failed" });
     } finally {
       setIsLoading(false);
     }
@@ -45,9 +44,8 @@ export default function UploadTest() {
       if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
       const result = await res.json();
       setResponse(result);
-    } catch (error: any) {
-      console.error("API Route error:", error);
-      setResponse({ error: error.message });
+    } catch (error: unknown) {
+      setResponse({ error: error instanceof Error ? error.message : "Upload failed" });
     } finally {
       setIsLoading(false);
     }

@@ -1,4 +1,4 @@
-import { VaultaClient } from "@vaulta.dev/sdk";
+import { VaultaClient, BufferWithMetadata } from "@vaulta.dev/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
 const client = new VaultaClient({
@@ -18,12 +18,12 @@ export async function POST(request: NextRequest) {
 
     // Convert web File objects to Buffer for Node.js SDK
     const nodeFiles = await Promise.all(
-      files.map(async (file: any) => {
-        if (typeof file.arrayBuffer === "function") {
-          const buffer = Buffer.from(await file.arrayBuffer());
-          (buffer as any).name = file.name;
-          (buffer as any).type = file.type;
-          (buffer as any).size = file.size;
+      files.map(async (file) => {
+        if (file instanceof File) {
+          const buffer = Buffer.from(await file.arrayBuffer()) as BufferWithMetadata;
+          buffer.name = file.name;
+          buffer.type = file.type;
+          buffer.size = file.size;
           return buffer;
         }
         return file;
@@ -32,11 +32,9 @@ export async function POST(request: NextRequest) {
 
     const result = await client.uploadFiles(nodeFiles);
     return NextResponse.json(result);
-  } catch (error: any) {
-    console.error("Upload API error:", error);
-
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: error.message || "Upload failed" },
+      { error: error instanceof Error ? error.message : "Upload failed" },
       { status: 500 }
     );
   }

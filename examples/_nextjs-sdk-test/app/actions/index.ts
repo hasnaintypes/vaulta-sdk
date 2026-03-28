@@ -1,5 +1,5 @@
 "use server";
-import { VaultaClient } from "@vaulta.dev/sdk";
+import { VaultaClient, BufferWithMetadata } from "@vaulta.dev/sdk";
 
 const client = new VaultaClient({
   apiKey: process.env.VAULTA_API_KEY!,
@@ -16,13 +16,12 @@ export async function uploadAction(formData: FormData) {
 
     // Convert web File objects to Buffer for Node.js SDK
     const nodeFiles = await Promise.all(
-      files.map(async (file: any) => {
-        if (typeof file.arrayBuffer === "function") {
-          const buffer = Buffer.from(await file.arrayBuffer());
-          // preserve name/type/size for SDK
-          (buffer as any).name = file.name;
-          (buffer as any).type = file.type;
-          (buffer as any).size = file.size;
+      files.map(async (file) => {
+        if (file instanceof File) {
+          const buffer = Buffer.from(await file.arrayBuffer()) as BufferWithMetadata;
+          buffer.name = file.name;
+          buffer.type = file.type;
+          buffer.size = file.size;
           return buffer;
         }
         return file;
@@ -31,11 +30,9 @@ export async function uploadAction(formData: FormData) {
 
     const result = await client.uploadFiles(nodeFiles);
     return result;
-  } catch (error: any) {
-    console.error("Server Action upload error:", error);
-
+  } catch (error: unknown) {
     return {
-      error: error?.message || "Upload failed",
+      error: error instanceof Error ? error.message : "Upload failed",
     };
   }
 }
