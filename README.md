@@ -20,11 +20,12 @@ import { VaultaClient } from "@vaulta.dev/sdk";
 
 const client = new VaultaClient({
   apiKey: "your-api-key",
+  apiUrl: "https://your-api.example.com/api/v1",
 });
 
 // Upload files
 const result = await client.uploadFiles(files);
-console.log(result.files);
+console.log(result.data);
 ```
 
 ## Usage Examples
@@ -84,6 +85,14 @@ async function uploadAction(formData: FormData) {
 }
 ```
 
+## Options
+
+| Option | Type | Required | Description |
+|--------|------|----------|-------------|
+| `apiKey` | `string` | Yes | Your Vaulta API key |
+| `apiUrl` | `string` | No | API base URL (defaults to `https://localhost:8000/api/v1`) |
+| `isBrowser` | `boolean` | No | Set to `true` when running in browser environments (e.g., Next.js client components, React apps). Uses native `fetch` and `FormData` instead of Node.js modules. |
+
 ## Supported File Types
 
 - **Node.js**: File paths (strings), Buffers
@@ -111,9 +120,9 @@ try {
 Full TypeScript support with type definitions:
 
 ```typescript
-import type { UploadFileResponse } from "@vaulta.dev/sdk/types";
+import type { UploadResponseType } from "@vaulta.dev/sdk/types";
 
-const result: UploadFileResponse = await client.uploadFiles(files);
+const result: UploadResponseType = await client.uploadFiles(files);
 ```
 
 ## Requirements

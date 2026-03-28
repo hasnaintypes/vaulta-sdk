@@ -5,7 +5,7 @@ export default defineConfig({
     "./src/index.ts",
     "./src/types.ts",
     "./src/errors.ts",
-    "./src/constants/file-types.ts",
+    "./src/constants/index.ts",
   ],
 
   format: ["esm", "cjs"],
