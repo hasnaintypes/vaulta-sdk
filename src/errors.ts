@@ -2,9 +2,12 @@ export enum UploadErrorCode {
   VALIDATION_ERROR = "VALIDATION_ERROR",
   UNAUTHORIZED = "UNAUTHORIZED",
   UPLOAD_FAILED = "UPLOAD_FAILED",
-  REQUEST_FAILED = "REQUEST_FAILED",
   INVALID_FILE = "INVALID_FILE",
   NETWORK_ERROR = "NETWORK_ERROR",
+}
+
+interface ErrorWithCaptureStackTrace {
+  captureStackTrace?(targetObject: object, constructorOpt?: Function): void;
 }
 
 export class UploadNestError extends Error {
@@ -16,8 +19,9 @@ export class UploadNestError extends Error {
     this.statusCode = statusCode;
     this.errorCode = errorCode;
     this.name = this.constructor.name;
-    if (typeof (Error as any).captureStackTrace === "function") {
-      (Error as any).captureStackTrace(this, InvalidFileError);
+    const ErrorWithStack = Error as unknown as ErrorWithCaptureStackTrace;
+    if (typeof ErrorWithStack.captureStackTrace === "function") {
+      ErrorWithStack.captureStackTrace(this, this.constructor);
     }
   }
 }
@@ -49,9 +53,5 @@ export class NetworkError extends UploadNestError {
 export class InvalidFileError extends UploadNestError {
   constructor(message = "Invalid file input") {
     super(message, 400, UploadErrorCode.INVALID_FILE);
-    // Add this if you want to capture stack trace
-    if (typeof (Error as any).captureStackTrace === "function") {
-      (Error as any).captureStackTrace(this, InvalidFileError);
-    }
   }
 }
